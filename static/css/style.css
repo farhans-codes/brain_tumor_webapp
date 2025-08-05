@@ -6,20 +6,28 @@ body {
   padding: 0;
 }
 header {
-  /* background-color: #2e7d32; */
-  background: #020024;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
   background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
   color: white;
   text-align: center;
   padding: 20px 10px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* optional: adds a subtle shadow */
 }
+
 main {
   padding: 30px;
   max-width: 600px;
-  margin: auto;
+  margin: 140px auto 40px; /* top margin added to avoid overlap with fixed header */
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 form {
   display: flex;
   flex-direction: column;

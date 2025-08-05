@@ -1,6 +1,3 @@
-import os
-port = int(os.environ.get("PORT", 5000))
-app.run(host="0.0.0.0", port=port)
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -28,12 +25,17 @@ def preprocess_image(img_path):
     img = img / 255.0
     return img
 
+@app.route("/preview/<filename>")
+def preview(filename):
+    return send_file(os.path.join(REPORT_FOLDER, filename), as_attachment=False)
+
+
 def generate_report(name, age, gender, contact, scan_type, scan_no, date, result_text):
     patient_id = str(uuid.uuid4())[:8].upper()
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 16)
-    pdf.cell(0, 10, "Atom Hospital", ln=True, align='C')
+    pdf.cell(0, 10, "MIU Hospital", ln=True, align='C')
     pdf.set_font("Arial", size=12)
     pdf.cell(0, 10, "House 10, Road 2, Mirpur 1, Dhaka, Bangladesh", ln=True, align='C')
     pdf.cell(0, 10, "Phone: 01000000259", ln=True, align='C')
@@ -65,7 +67,7 @@ def generate_report(name, age, gender, contact, scan_type, scan_no, date, result
     pdf.set_font("Arial", 'B', 12)
     pdf.cell(0, 10, "Protocol:", ln=True)
     pdf.set_font("Arial", '', 12)
-    pdf.multi_cell(0, 10, "Image ware predicted by the brain tumar detecting model")
+    pdf.multi_cell(0, 10, "Image were predicted by the brain tumor-detecting model")
 
     pdf.ln(5)
     pdf.set_font("Arial", 'B', 12)
