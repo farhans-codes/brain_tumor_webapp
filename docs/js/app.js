@@ -5,12 +5,20 @@ const form = document.querySelector('#scan-form');
 const button = document.querySelector('#analyze-button');
 const status = document.querySelector('#model-status');
 const error = document.querySelector('#form-error');
+const sampleStatus = document.querySelector('#sample-status');
 let imageUrl;
 
 loadScreeningModel().then(() => {
   status.textContent = 'Model ready. Images are processed on this device.';
 }).catch(() => {
   status.textContent = 'Model could not load. Check your connection and refresh the page.';
+});
+
+form.elements.image.addEventListener('change', () => {
+  clearReport();
+  if (imageUrl) URL.revokeObjectURL(imageUrl);
+  imageUrl = undefined;
+  error.hidden = true;
 });
 
 form.addEventListener('submit', async event => {
@@ -52,11 +60,36 @@ form.addEventListener('submit', async event => {
 });
 
 document.querySelector('#print-button').addEventListener('click', () => window.print());
+document.querySelectorAll('[data-sample]').forEach(sampleButton => {
+  sampleButton.addEventListener('click', async () => {
+    sampleButton.disabled = true;
+    sampleStatus.textContent = 'Loading example scan…';
+    try {
+      const name = sampleButton.dataset.sample;
+      const response = await fetch(`./examples/${name}`);
+      if (!response.ok) throw new Error('Example scan unavailable');
+      const blob = await response.blob();
+      const files = new DataTransfer();
+      files.items.add(new File([blob], name, { type: blob.type }));
+      form.elements.image.files = files.files;
+      form.elements.image.dispatchEvent(new Event('change', { bubbles: true }));
+      form.elements.scanType.value = 'MRI';
+      sampleStatus.textContent = `${sampleButton.closest('.example-card').querySelector('h3').textContent} selected. Enter fictional case details, then analyze the scan.`;
+      document.querySelector('#patient-name').focus();
+      document.querySelector('.entry-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch {
+      sampleStatus.textContent = 'Could not load the example. Please try again.';
+    } finally {
+      sampleButton.disabled = false;
+    }
+  });
+});
 document.querySelector('#clear-button').addEventListener('click', () => {
   form.reset();
   clearReport();
   if (imageUrl) URL.revokeObjectURL(imageUrl);
   imageUrl = undefined;
   error.hidden = true;
+  sampleStatus.textContent = '';
   document.querySelector('#patient-name').focus();
 });

@@ -118,6 +118,45 @@
           </div>
         </section>
       </section>
+
+      <section class="examples" aria-labelledby="examples-title">
+        <div class="examples-heading">
+          <div>
+            <h2 id="examples-title">Try a public example scan</h2>
+            <p>These credited teaching images are already public. Select one to fill the scan field, then enter fictional case details above. The labels describe the source images, not a validated model result.</p>
+          </div>
+        </div>
+        <div class="example-grid">
+          <article class="example-card">
+            <img src="./examples/meningioma.png" alt="Coronal MRI showing a meningioma marked by a red arrow" loading="lazy" width="690" height="710">
+            <div class="example-content">
+              <h3>Meningioma MRI</h3>
+              <p>Source describes a contrast-enhanced coronal MRI with a meningioma.</p>
+              <button class="secondary-button example-button" type="button" data-sample="meningioma.png">Use this scan</button>
+              <small><a href="https://commons.wikimedia.org/wiki/File:MRIMeningioma.png" rel="noopener noreferrer">James Heilman, MD · CC BY-SA 4.0</a></small>
+            </div>
+          </article>
+          <article class="example-card">
+            <img src="./examples/glioblastoma.jpg" alt="Axial MRI showing a glioblastoma" loading="lazy" width="513" height="545">
+            <div class="example-content">
+              <h3>Glioblastoma MRI</h3>
+              <p>The source reports biopsy confirmation. In a local check, this model missed the tumor.</p>
+              <button class="secondary-button example-button" type="button" data-sample="glioblastoma.jpg">Use this scan</button>
+              <small><a href="https://commons.wikimedia.org/wiki/File:Glioblastoma_multiforme_-_MRT_T1_ax.jpg" rel="noopener noreferrer">Hellerhoff · CC BY-SA 3.0</a></small>
+            </div>
+          </article>
+          <article class="example-card">
+            <img src="./examples/normal-brain.jpg" alt="Axial MRI of a brain described as normal by its source" loading="lazy" width="697" height="673">
+            <div class="example-content">
+              <h3>Normal brain MRI</h3>
+              <p>Source describes this head and brain MRI as normal.</p>
+              <button class="secondary-button example-button" type="button" data-sample="normal-brain.jpg">Use this scan</button>
+              <small><a href="https://commons.wikimedia.org/wiki/File:MRI_Head_Brain_Normal.jpg" rel="noopener noreferrer">Ptrump16 · CC BY-SA 4.0</a></small>
+            </div>
+          </article>
+        </div>
+        <p id="sample-status" class="sample-status" role="status" aria-live="polite"></p>
+      </section>
     </main>
     <footer class="site-footer">
       <span>Built by Muhammed Farhan Sadique Mahi</span>

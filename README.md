@@ -4,6 +4,8 @@ A public, browser-based demo of a two-class brain scan image model. Visitors can
 
 **Live demo:** https://farhans-codes.github.io/brain_tumor_webapp/
 
+![Screenshot of the live brain scan demo](docs/media/app-preview.jpg)
+
 > This is an educational research prototype. Clinical validation has not been documented for the model, and its output is not a diagnosis or a substitute for a qualified clinician.
 
 ## Privacy
@@ -19,7 +21,21 @@ The live app runs inference in the visitor's browser. Its JavaScript does not up
 3. Select **Analyze scan**. The model predicts either **No tumor detected** or **Tumor detected** and displays its output score.
 4. Use **Print / Save as PDF** to create a local copy, or **Clear this case** to remove the case from the page.
 
+For a quick trial, select **Use this scan** on one of the example cards. The app fills only the image and MRI fields; enter fictional case details before analyzing.
+
 The displayed model confidence is a raw model score. It is not a calibrated clinical probability. The model's training data, evaluation method, and clinical performance are not documented in the original project, so accuracy claims would be unsupported.
+
+## Public MRI examples
+
+These original images are included in `docs/examples/` for trying the browser workflow. Their source descriptions are independent of this model's predictions. The authors licensed them for reuse with attribution under Creative Commons ShareAlike; the files have not been altered.
+
+| Source description | Preview | Credit and license |
+| --- | --- | --- |
+| Meningioma, coronal contrast MRI | <img src="docs/examples/meningioma.png" alt="MRI with meningioma marked by an arrow" width="150"> | [James Heilman, MD, CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:MRIMeningioma.png) |
+| Glioblastoma, axial T1 MRI | <img src="docs/examples/glioblastoma.jpg" alt="Axial MRI of glioblastoma" width="150"> | [Hellerhoff, CC BY-SA 3.0](https://commons.wikimedia.org/wiki/File:Glioblastoma_multiforme_-_MRT_T1_ax.jpg) |
+| Normal head and brain MRI | <img src="docs/examples/normal-brain.jpg" alt="MRI described as normal" width="150"> | [Ptrump16, CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:MRI_Head_Brain_Normal.jpg) |
+
+In a browser smoke check on the local site, the meningioma image returned **Tumor detected**, the normal MRI returned **No tumor detected**, and the source-confirmed glioblastoma image incorrectly returned **No tumor detected**. These three examples cannot establish accuracy or safety; the false negative is a concrete reason not to rely on the demo for clinical decisions.
 
 ## Run locally
 
@@ -36,6 +52,8 @@ Open http://localhost:8000/. No build step, account, API key, backend, or databa
 ```text
 docs/
   index.html            Accessible form and printable report
+  examples/             Publicly licensed MRI teaching images
+  media/                App screenshot for the README
   css/app.css           Responsive layout and visual tokens
   js/app.js             Form validation and workflow
   js/model.js           Model loading, preprocessing, and inference
