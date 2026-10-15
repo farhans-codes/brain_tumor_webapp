@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="description" content="Browser-only brain scan classification research demo. No scan or patient details are uploaded.">
+    <title>Brain Scan Screening Demo</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <script defer src="./vendor/tf.min.js"></script>
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./" aria-label="Brain Scan Screening Demo home">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>Brain Scan <strong>Screening Demo</strong></span>
+        </a>
+        <span class="header-tag">Research prototype</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <h1 id="page-title">Explore a brain scan prediction</h1>
+          <p>Enter case details and choose an MRI or CT image. The model runs in your browser and creates a report you can print or save as a PDF.</p>
+        </div>
+        <div class="privacy-note">
+          <span class="privacy-icon" aria-hidden="true">◆</span>
+          <div><strong>Private by design</strong><br>New scans and case details stay in this browser tab. Closing or refreshing the tab clears them.</div>
+        </div>
+      </section>
+
+      <div class="notice" role="note">
+        This is an educational model demo, not a medical diagnosis. Clinical validation has not been documented for this model. Do not use its result to make treatment decisions.
+      </div>
+
+      <section class="workspace" aria-label="Scan screening workflow">
+        <div class="entry-panel">
+          <h2>Case details</h2>
+          <p class="section-copy">These details appear only in the report shown on this device.</p>
+          <form id="scan-form" novalidate>
+            <div class="field-grid">
+              <div class="field field-full">
+                <label for="patient-name">Patient name</label>
+                <input id="patient-name" name="name" type="text" autocomplete="off" maxlength="80" required>
+              </div>
+              <div class="field">
+                <label for="patient-age">Age</label>
+                <input id="patient-age" name="age" type="number" min="1" max="120" inputmode="numeric" required>
+              </div>
+              <div class="field">
+                <label for="patient-gender">Gender</label>
+                <select id="patient-gender" name="gender" required>
+                  <option value="">Select</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Other</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="patient-contact">Contact number <span class="optional">optional</span></label>
+                <input id="patient-contact" name="contact" type="tel" autocomplete="off" maxlength="30">
+              </div>
+              <div class="field">
+                <label for="scan-type">Scan type</label>
+                <select id="scan-type" name="scanType" required>
+                  <option value="">Select</option>
+                  <option>MRI</option>
+                  <option>CT</option>
+                </select>
+              </div>
+            </div>
+            <div class="field upload-field">
+              <label for="scan-image">Scan image</label>
+              <input id="scan-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="image-help">
+              <small id="image-help">PNG, JPEG, or WebP · maximum 10 MB</small>
+            </div>
+            <p id="form-error" class="form-error" role="alert" hidden></p>
+            <button id="analyze-button" class="primary-button" type="submit">Analyze scan</button>
+            <p id="model-status" class="status" role="status">Preparing the model…</p>
+          </form>
+        </div>
+
+        <section id="result-panel" class="result-panel" aria-label="Screening result">
+          <div id="empty-state" class="empty-state">
+            <div class="empty-symbol" aria-hidden="true">+</div>
+            <h2 id="result-title">Your result will appear here</h2>
+            <p>Complete the case details and select a scan to see the model prediction and printable report.</p>
+          </div>
+          <div id="report" class="report" hidden>
+            <div class="report-heading">
+              <div>
+                <h2>Screening report</h2>
+                <p>Educational model output · not a clinical report</p>
+              </div>
+              <span id="report-date" class="report-date"></span>
+            </div>
+            <div class="prediction">
+              <span>Model prediction</span>
+              <strong id="prediction-label"></strong>
+              <p id="prediction-confidence"></p>
+            </div>
+            <dl id="report-details" class="report-details"></dl>
+            <div class="scan-preview">
+              <h3>Uploaded scan</h3>
+              <div id="report-image-container"></div>
+            </div>
+            <p class="report-warning">Clinical validation has not been documented for this model. Consult a qualified clinician for interpretation.</p>
+            <div class="report-actions">
+              <button id="print-button" class="secondary-button" type="button">Print / Save as PDF</button>
+              <button id="clear-button" class="text-button" type="button">Clear this case</button>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <span>Built by Muhammed Farhan Sadique Mahi</span>
+      <a href="https://github.com/farhans-codes/brain_tumor_webapp" rel="noopener noreferrer">View source on GitHub</a>
+    </footer>
+  </body>
+</html>
